@@ -1,0 +1,80 @@
+# Flutter/Dart/Pub related
+**/build/
+**/.dart_tool/
+**/.pub-cache/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+
+# Android related
+android/.gradle/
+android/app/build/
+android/local.properties
+android/.idea/
+android/app/*.keystore
+
+# iOS related
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework/
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/app.framework
+ios/Flutter/app.podspec
+ios/Flutter/engine/
+ios/ServiceDefinitions.json
+ios/Runner.xcworkspace
+ios/Runner/GeneratedPluginRegistrant.*
+
+# Xcode
+**/xcuserdata/
+**/DerivedData/
+**/.vscode/
+*.xcworkspace
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+
+# Web related
+web/.dart_tool/
+web/main.dart.js
+web/main.dart.js.deps
+web/main.dart.js.map
+web/flutter_service_worker.js
+web/manifest.json
+
+# macOS related
+macos/Flutter/ephemeral/
+macos/Flutter/Flutter.podspec
+macos/Pods/
+macos/.symlinks/
+macos/Flutter/Flutter.framework/
+macos/Flutter/Flutter.podspec
+macos/Flutter/Generated.xcconfig
+macos/Flutter/app.framework
+macos/Flutter/app.podspec
+macos/Flutter/engine/
+macos/ServiceDefinitions.json
+macos/Runner.xcworkspace
+
+# Windows related
+windows/flutter/ephemeral/
+windows/flutter/generated_plugin_registrant.cc
+
+# Linux related
+linux/flutter/ephemeral/
+linux/flutter/generated_plugin_registrant.cc
+
+# Firebase related
+ios/Runner/GoogleService-Info.plist
+android/app/google-services.json
+
+# IntelliJ related
+*.ipr
+*.iws
+*.idea/
+*.iml
+
+# Visual Studio Code related
+.vscode/
