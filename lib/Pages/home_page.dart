@@ -39,38 +39,34 @@ class _HomePageState extends State<HomePage> {
             itemCount: value.allTodos.length,
             itemBuilder: (context, index) {
               Todo individualTodo = value.allTodos[index];
-              return Container(
-                margin: const EdgeInsets.only(
-                  bottom: 10,
-                ),
-                child: TodoTile(
-                  title: individualTodo.title,
-                  subTitle: individualTodo.details,
-                  isComplete: individualTodo.isComplete,
-                  onEditPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditTask(
-                          todo: value.allTodos[index],
-                        ),
+              return TodoTile(
+                title: individualTodo.title,
+                subTitle: individualTodo.details,
+                isComplete: individualTodo.isComplete,
+                onEditPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditTask(
+                        todo: value.allTodos[index],
                       ),
-                    );
-                  },
-                  onDeletePressed: () {
-                    deleteTodoDialog(value.allTodos[index].id);
-                  },
-                  onStatusPressed: () async {
-                    Todo updatedTodo = Todo(
-                        title: value.allTodos[index].title,
-                        details: value.allTodos[index].details,
-                        dateTime: value.allTodos[index].dateTime,
-                        isComplete: !value.allTodos[index].isComplete);
-                    await context
-                        .read<TodoDatabase>()
-                        .updateTodo(value.allTodos[index].id, updatedTodo);
-                  },
-                ),
+                    ),
+                  );
+                },
+                onDeletePressed: () {
+                  deleteTodoDialog(value.allTodos[index].id);
+                },
+                onStatusPressed: () async {
+                  Todo updatedTodo = Todo(
+                      title: value.allTodos[index].title,
+                      details: value.allTodos[index].details,
+                      dateTime: value.allTodos[index].dateTime,
+                      scheduledTime: value.allTodos[index].scheduledTime,
+                      isComplete: !value.allTodos[index].isComplete);
+                  await context
+                      .read<TodoDatabase>()
+                      .updateTodo(value.allTodos[index].id, updatedTodo);
+                },
               );
             },
           ),

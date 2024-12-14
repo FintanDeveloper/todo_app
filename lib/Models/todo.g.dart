@@ -32,8 +32,13 @@ const TodoSchema = CollectionSchema(
       name: r'isComplete',
       type: IsarType.bool,
     ),
-    r'title': PropertySchema(
+    r'scheduledTime': PropertySchema(
       id: 3,
+      name: r'scheduledTime',
+      type: IsarType.dateTime,
+    ),
+    r'title': PropertySchema(
+      id: 4,
       name: r'title',
       type: IsarType.string,
     )
@@ -72,7 +77,8 @@ void _todoSerialize(
   writer.writeDateTime(offsets[0], object.dateTime);
   writer.writeString(offsets[1], object.details);
   writer.writeBool(offsets[2], object.isComplete);
-  writer.writeString(offsets[3], object.title);
+  writer.writeDateTime(offsets[3], object.scheduledTime);
+  writer.writeString(offsets[4], object.title);
 }
 
 Todo _todoDeserialize(
@@ -85,7 +91,8 @@ Todo _todoDeserialize(
     dateTime: reader.readDateTime(offsets[0]),
     details: reader.readString(offsets[1]),
     isComplete: reader.readBoolOrNull(offsets[2]) ?? false,
-    title: reader.readString(offsets[3]),
+    scheduledTime: reader.readDateTime(offsets[3]),
+    title: reader.readString(offsets[4]),
   );
   object.id = id;
   return object;
@@ -105,6 +112,8 @@ P _todoDeserializeProp<P>(
     case 2:
       return (reader.readBoolOrNull(offset) ?? false) as P;
     case 3:
+      return (reader.readDateTime(offset)) as P;
+    case 4:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -442,6 +451,59 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
     });
   }
 
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> scheduledTimeEqualTo(
+      DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'scheduledTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> scheduledTimeGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'scheduledTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> scheduledTimeLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'scheduledTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> scheduledTimeBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'scheduledTime',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<Todo, Todo, QAfterFilterCondition> titleEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -612,6 +674,18 @@ extension TodoQuerySortBy on QueryBuilder<Todo, Todo, QSortBy> {
     });
   }
 
+  QueryBuilder<Todo, Todo, QAfterSortBy> sortByScheduledTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'scheduledTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterSortBy> sortByScheduledTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'scheduledTime', Sort.desc);
+    });
+  }
+
   QueryBuilder<Todo, Todo, QAfterSortBy> sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -674,6 +748,18 @@ extension TodoQuerySortThenBy on QueryBuilder<Todo, Todo, QSortThenBy> {
     });
   }
 
+  QueryBuilder<Todo, Todo, QAfterSortBy> thenByScheduledTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'scheduledTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterSortBy> thenByScheduledTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'scheduledTime', Sort.desc);
+    });
+  }
+
   QueryBuilder<Todo, Todo, QAfterSortBy> thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -707,6 +793,12 @@ extension TodoQueryWhereDistinct on QueryBuilder<Todo, Todo, QDistinct> {
     });
   }
 
+  QueryBuilder<Todo, Todo, QDistinct> distinctByScheduledTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'scheduledTime');
+    });
+  }
+
   QueryBuilder<Todo, Todo, QDistinct> distinctByTitle(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -737,6 +829,12 @@ extension TodoQueryProperty on QueryBuilder<Todo, Todo, QQueryProperty> {
   QueryBuilder<Todo, bool, QQueryOperations> isCompleteProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isComplete');
+    });
+  }
+
+  QueryBuilder<Todo, DateTime, QQueryOperations> scheduledTimeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'scheduledTime');
     });
   }
 

@@ -34,12 +34,13 @@ class TodoDatabase extends ChangeNotifier {
   */
 
   // Create - add a new todo
-  Future<void> createTodo(Todo newTodo) async {
+  Future<int> createTodo(Todo newTodo) async {
     // add to db
-    await isar.writeTxn(() => isar.todos.put(newTodo));
+    var id = await isar.writeTxn(() => isar.todos.put(newTodo));
 
     // re-read from db
     await readTodos();
+    return id;
   }
 
   // Read Todos from db

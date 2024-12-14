@@ -24,15 +24,14 @@ class TodoTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: resHeight(72, context),
+      margin: EdgeInsets.only(bottom: resHeight(10, context)),
       padding: EdgeInsets.symmetric(
           horizontal: resWidth(10, context), vertical: resHeight(10, context)),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(15)),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(
-            width: resWidth(180, context),
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -47,14 +46,12 @@ class TodoTile extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  subTitle.split('\n').join(', '),
-                  maxLines: 1,
+                  subTitle,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: resHeight(14, context),
                     color: Colors.black,
                     fontWeight: FontWeight.w400,
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],

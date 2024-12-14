@@ -8,12 +8,14 @@ class Todo {
   final String title;
   final String details;
   final DateTime dateTime;
+  final DateTime scheduledTime;
   final bool isComplete;
 
   Todo({
     required this.title,
     required this.details,
     required this.dateTime,
+    required this.scheduledTime,
     this.isComplete = false,
   });
 }
